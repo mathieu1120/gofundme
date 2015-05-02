@@ -1,31 +1,30 @@
-<div class="row">
-  <form class="form-horizontal" action="./" method="post">
-    <div class="form-group">
-      <label class="control-label col-sm-4">Search:</label>
-      <div class="col-sm-4">
-        <input type="text" name="search" class="form-control" />
-        <span class="help-block">Please type a restaurant name or a cuisine name</span>
-      </div>
+<form class="form-horizontal" action="./" method="post">
+  <div class="form-group">
+    <label class="control-label col-sm-4">Search:</label>
+    <div class="col-sm-4">
+      <input type="text" name="search" class="form-control" />
+      <span class="help-block">Please type a restaurant name or a cuisine name</span>
     </div>
-    <div class="form-group">
-      <div class="col-sm-offset-4 col-sm-4">
-        <input type="submit" name="search-restaurant" value="search" class="btn btn-default" />
-      </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-4">
+      <input type="submit" name="search-restaurant" value="search" class="btn btn-default" />
     </div>
-  </form>
-</div>
-<hr/>
-<div class="row">
-  <?php
+  </div>
+</form>
+<?php
 echo '<div id="results">'.(isset($viewVars['restaurant-result']) ? $viewVars['restaurant-result'] : '').'</div>';
 ?>
-</div>
-<hr/>
 <div class="margin-20">
-  <button type="button" class="btn btn-default" id="restaurant-toggle-form">Add Restaurant</button><button type="button" class="btn btn-default" id="cuisine-toggle-form">Add Cuisine</button>
+  <ul class="nav nav-tabs">
+    <li data-display="list" class="active"><a href="#">List</a></li>
+    <li data-display="restaurant-form"><a href="#">Add Restaurant</a></li>
+    <li data-display="cuisine-form"><a href="#">Add Cuisine</a></li>
+  </ul>
 </div>
-<div class="row margin-20" id="restaurant-form">
-  <form name="add-restaurant" class="form-horizontal" action="./" method="post">
+
+<div class="tab-content" id="restaurant-form">
+  <form name="add-restaurant" class="form-horizontal margin-20" action="./" method="post">
     <div class="form-group">
       <label class="control-label col-sm-4">Restaurant Name:</label>
       <div class="col-sm-4">
@@ -88,8 +87,8 @@ echo '<div id="results">'.(isset($viewVars['restaurant-result']) ? $viewVars['re
   </form>
 </div>
 
-<div class="row margin-20" id="cuisine-form">
-  <form name="add-cuisine" class="form-horizontal" action="./" method="post">
+<div class="tab-content" id="cuisine-form">
+  <form name="add-cuisine" class="form-horizontal margin-20" action="./" method="post">
     <div class="form-group">
       <label class="control-label col-sm-4">Cuisine Name:</label>
       <div class="col-sm-4">
@@ -104,34 +103,10 @@ echo '<div id="results">'.(isset($viewVars['restaurant-result']) ? $viewVars['re
     </div>
   </form>
 </div>
-<hr/>
-<div class="row<?php echo (!isset($viewVars['submitted-restaurant']) ? ' hidden' : '');?>">
+
+<div id="list" class="tab-content active">
   <h2>Last Added Restaurant</h2>
-  <table id="last-restaurant" class="table table-striped table-bordered">
-    <tr>
-      <th>ID</th>
-      <th>Restaurant Name</th>
-      <th>Description</th>
-      <th>Cuisine</th>
-      <th>Rate</th>
-      <th>Location</th>
-    </tr>
-    <?php
-    $i = 0;
-    foreach ($viewVars['restaurantList'] as $restaurant)
-    {
-      echo '<tr>
-                        <td>'.dp($restaurant['id_restaurant']).'</td>
-                        <td>'.dp($restaurant['name']).'</td>
-                        <td>'.dp($restaurant['description']).'</td>
-                        <td>'.dp($restaurant['cuisine.name']).'</td>
-                        <td>'.dp($restaurant['rate']).' / 5</td>
-                        <td>'.dp($restaurant['location']).'</td>
-                </tr>';
-      $i++;
-    }
-    ?>
-  </table>
-  <button class="btn btn-primary center-block" id="load-more-rows" rel="<?php echo $i;?>">Load more rows (Max 5)</button>
+  <?php echo $viewVars['restaurantList'];?>
+  <button class="btn btn-primary center-block" id="load-more-rows" rel="5">Load more rows (Max 5)</button>
 </div>
 <hr/>

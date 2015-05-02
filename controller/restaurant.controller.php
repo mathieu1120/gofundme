@@ -43,6 +43,7 @@ class RestaurantController extends Controller
     self::$viewVars['cuisines'] = $cuisine->getList(array(), array('name' => 'ASC'));
     $restaurant = new Restaurant();
     self::$viewVars['restaurantList'] = $restaurant->getList(array(), array('id_restaurant' => 'DESC'), 0, 5);
+    self::$viewVars['restaurantList'] = $this->getContent('restaurant-result');
 
     parent::run();
   }

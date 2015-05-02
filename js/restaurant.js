@@ -1,8 +1,7 @@
-$('#restaurant-toggle-form, #cuisine-toggle-form').click(function(){
-    var formId = $(this).attr('id').replace('-toggle-form', '');
-    console.log(formId);
-    if ($('#'+formId+'-form').length)
-	$('#'+formId+'-form').toggle();
+$('.nav-tabs li').click(function(){
+    $('.tab-content, .nav-tabs li').removeClass('active');
+    $(this).addClass('active');
+    $('#'+$(this).attr('data-display')).addClass('active');
 });
 
 $('form').submit(function(){
@@ -36,7 +35,7 @@ $('#load-more-rows').click(function(){
 		  }
 	   }).done(function(data){
 	       var restaurants = JSON.parse(data);
-	       var lastRestaurant = $('#last-restaurant');
+	       var lastRestaurant = $('#list table');
 
 	       if (restaurants.restaurants)
 	       {

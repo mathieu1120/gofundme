@@ -77,7 +77,7 @@ $('input[name="search"]').keyup(function(){
 	   });
 });
 
-$('#list').on('click', 'table button[data-remove]', function(){
+$('.container').on('click', 'table button[data-remove]', function(){
     if (!confirm('Are you sure?'))
 	return false;
 
@@ -107,7 +107,7 @@ $('#list').on('click', 'table button[data-remove]', function(){
 	   });
 });
 
-$('#list').on('click', 'table button[data-edit]', function(){
+$('.container').on('click', 'table button[data-edit]', function(){
     $.each($(this).closest('tr').find('td[data-form-type]'), function(){
 	if ($(this).attr('data-form-type') == 'text')
 	    $(this).html('<input type="text" value="'+$(this).text()+'" />');
@@ -143,7 +143,7 @@ $('#list').on('click', 'table button[data-edit]', function(){
     $(this).attr('data-save', 'data-save');
 });
 
-$('#list').on('click', 'table button[data-save]', function(){
+$('.container').on('click', 'table button[data-save]', function(){
     var data = {};
     $.each($(this).closest('tr').find('td[data-form-type]'), function(){
 	var val, valText;

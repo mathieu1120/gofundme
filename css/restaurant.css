@@ -20,3 +20,8 @@ form span.error
 {
     display: none;
 }
+
+table th:last-child
+{
+    width: 160px;
+}

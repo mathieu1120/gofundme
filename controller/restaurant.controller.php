@@ -86,4 +86,38 @@ class RestaurantController extends Controller
     echo self::$viewVars['restaurant-result'];
     return true;
   }
+
+  public function ajaxRemoveRestaurant()
+  {
+    if (!post('restaurant'))
+    return false;
+
+    $restaurant = new Restaurant((int)post('restaurant'));
+    echo json_encode(array('remove' => $restaurant->remove()));
+    return true;
+  }
+
+  public function ajaxGetCuisineList()
+  {
+    $cuisine = new Cuisine();
+    $options = array();
+    foreach ($cuisine->getList(array(), array('name' => 'ASC')) as $c)
+    $options[] = array('value' => $c['id_cuisine'], 'text' => $c['name']);
+    echo json_encode(array('options' => $options));
+    return true;
+  }
+
+  public function ajaxEditRestaurant()
+  {
+    if (!post('restaurant'))
+    return false;
+
+    $restaurant = new Restaurant((int)post('restaurant'));
+    $restaurant->name = pSQL(post('name'));
+    $restaurant->description = pSQL(post('description'));
+    $restaurant->id_cuisine = (int)post('id_cuisine');
+    $restaurant->rate = post('rate') <= 5 ? (int)post('rate') : 0;
+    $restaurant->location = pSQL(post('location'));
+    return $restaurant->update();
+  }
 }

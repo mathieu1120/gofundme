@@ -1,0 +1,14 @@
+.margin-20
+{
+    margin-bottom: 20px;
+}
+
+#restaurant-form, #cuisine-form
+{
+    display: none;
+}
+
+form span.error
+{
+    display: none;
+}

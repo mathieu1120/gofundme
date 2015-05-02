@@ -71,7 +71,11 @@ $('input[name="search"]').keyup(function(){
 		   search: search
 		  }
 	   }).done(function(data){
-	       $('#results').html(data);
+	       if (!data)
+		   return false;
+	       var jsondata = JSON.parse(data);
+	       if (jsondata['restaurant-result'])
+		   $('#results').html(jsondata['restaurant-result']);
 	   }).fail(function(data){
 	       console.log('fail, please do something');
 	   });

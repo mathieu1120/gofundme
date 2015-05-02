@@ -2,6 +2,8 @@
 
 class AjaxController extends Controller
 {
+  public $view = 'ajax';
+
   public function run()
   {
     if (!post('controller') || !post('action'))
@@ -11,6 +13,12 @@ class AjaxController extends Controller
     $controller = post('controller');
     $action = post('action');
     $ajax = new Ajax($controller, $action, $id, $_POST);
-    $ajax->execute();
+    self::$viewVars['ajaxJSON'] = array();
+    if ($ajax->execute() && self::$viewVars['ajaxJSON'])
+    {
+      $this->display();
+      return true;
+    }
+    return false;
   }
 }

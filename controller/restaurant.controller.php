@@ -15,7 +15,7 @@ class RestaurantController extends Controller
   public function postProcess()
   {
     if (post('search-restaurant') && post('search'))
-    $this->displayProcessSearch(post('search'));
+    $this->processSearch(post('search'));
     else if (post('add-restaurant'))
     $this->processRestaurant();
     else if (post('add-cuisine'))
@@ -23,7 +23,7 @@ class RestaurantController extends Controller
     
   }
 
-  public function displayProcessSearch($search)
+  public function processSearch($search)
   {
     $restaurant = new Restaurant();
     $restaurant->name = pSQL($search);
@@ -73,7 +73,7 @@ class RestaurantController extends Controller
     $restaurant = new Restaurant();
     $restaurantList = $restaurant->getList(array(), array('id_restaurant' => 'DESC'), (int)post('start'), 5);
 
-    echo json_encode(array('restaurants' => $restaurantList));
+    self::$viewVars['ajaxJSON'] = array('restaurants' => $restaurantList);
     return true;
   }
 
@@ -82,8 +82,8 @@ class RestaurantController extends Controller
     if (!post('search'))
     return false;
 
-    $this->displayProcessSearch(post('search'));
-    echo self::$viewVars['restaurant-result'];
+    $this->processSearch(post('search'));
+    self::$viewVars['ajaxJSON'] = array('restaurant-result' => self::$viewVars['restaurant-result']);
     return true;
   }
 
@@ -93,7 +93,7 @@ class RestaurantController extends Controller
     return false;
 
     $restaurant = new Restaurant((int)post('restaurant'));
-    echo json_encode(array('remove' => $restaurant->remove()));
+    self::$viewVars['ajaxJSON'] = array('remove' => $restaurant->remove());
     return true;
   }
 
@@ -103,7 +103,7 @@ class RestaurantController extends Controller
     $options = array();
     foreach ($cuisine->getList(array(), array('name' => 'ASC')) as $c)
     $options[] = array('value' => $c['id_cuisine'], 'text' => $c['name']);
-    echo json_encode(array('options' => $options));
+    self::$viewVars['ajaxJSON'] = array('options' => $options);
     return true;
   }
 
@@ -115,7 +115,7 @@ class RestaurantController extends Controller
     $restaurant = new Restaurant((int)post('restaurant'));
     $restaurant->name = pSQL(post('name'));
     $restaurant->description = pSQL(post('description'));
-    $restaurant->id_cuisine = (int)post('id_cuisine');
+    $restaurant->id_cuisine = (int)post('cuisine_name');
     $restaurant->rate = post('rate') <= 5 ? (int)post('rate') : 0;
     $restaurant->location = pSQL(post('location'));
     return $restaurant->update();

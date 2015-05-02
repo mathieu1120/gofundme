@@ -22,6 +22,6 @@ class Ajax
   {
     $obj = new $this->controller((int)$this->id);
     $methode = $this->action;
-    $obj->$methode($this->param);
+    return $obj->$methode($this->param);
   }
 }

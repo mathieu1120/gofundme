@@ -18,7 +18,7 @@ foreach ($viewVars['restaurantList'] as $restaurant)
                         <td data-field="id_restaurant">'.(int)$restaurant['id_restaurant'].'</td>
                         <td data-field="name" data-form-type="text">'.dp($restaurant['name']).'</td>
                         <td data-field="description" data-form-type="textarea">'.dp($restaurant['description']).'</td>
-                        <td data-field="id_cuisine" data-form-type="select" data-form-options="ajaxGetCuisineList">'.dp($restaurant['cuisine.name']).'</td>
+                        <td data-field="cuisine.name" data-form-type="select" data-form-options="ajaxGetCuisineList">'.dp($restaurant['cuisine.name']).'</td>
                         <td data-field="rate" data-form-type="text">'.(int)$restaurant['rate'].'</td>
                         <td data-field="location" data-form-type="textarea">'.dp($restaurant['location']).'</td>
                         <td data-action="id_restaurant">
